@@ -1,0 +1,6 @@
+#+TITLE: Emacs org-mode tools
+
+These files accompany my [[https://changelog.complete.org/archives/tag/emacs2018][blog series on Emacs]], and in particular these posts:
+
+ - [[https://changelog.complete.org/archives/9898-emacs-4-automated-emails-to-org-mode-and-org-mode-syncing][Emacs #4: Automated emails to org-mode and org-mode syncing]]
+
