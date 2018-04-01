@@ -1,0 +1,58 @@
+* Syncing
+
+We can sync this stuff nicely.  Save the org buffers, sync, then
+revert to pull in changes.  I'm not sure why the revert always
+prompts.
+
+There is documentation on all of this in the Emacs Lisp manual (see
+[[info:elisp#Asynchronous%20Processes][info:elisp#Asynchronous Processes]] or [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Asynchronous-Processes.html][online version]]).  The [[info:elisp#Sentinels][sentinel]]
+function is called when the process changes state, and ="finished\n"=
+indicates a successful exit.
+
+We first save all Org buffers.  This causes a git commit to occur.
+Then we switch to =*Org Sync Output*=, which creates it if it doesn't
+exist (as with =C-x b=).  That buffer gets erased.  Then, the
+subprocess is called and the sentinel is set up.  Since it runs
+asynchronously, the output is visible in the buffer as it goes.
+
+I found an [[https://github.com/chuntaro/emacs-async-await/blob/master/examples/async-await-examples.el#L236][example online]] for the make-process as well.  There they
+used =(lambda (_process event) ...)= for the sentinel.
+
+The =progn= lets me use a list of multiple actions under the =if=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun jgoerzen/org-sync-sentinel (_process retcode)
+    "Handle output from the org-sync"
+    (if (equal retcode "finished\n")
+        (progn (org-revert-all-org-buffers)
+               (org-id-update-id-locations)
+               (org-mobile-pull)
+               (org-mobile-push)
+               (org-save-all-org-buffers)
+               (switch-to-buffer "*Org Sync Output*")
+               (make-process 
+                :name "org-sync"
+                :buffer "*Org Sync Output*"
+                :command (cl-list* "make" (list "-C" "~/org" "push"))
+                )
+
+               )
+      )
+    )
+
+  (defun jgoerzen/org-sync ()
+    "Sync org."
+    (interactive)
+    (org-save-all-org-buffers)
+    (switch-to-buffer "*Org Sync Output*")
+    (erase-buffer)
+    (make-process 
+       :name "org-sync"
+       :buffer "*Org Sync Output*"
+       :command (cl-list* "make" (list "-C" "~/org"))
+       :sentinel 'jgoerzen/org-sync-sentinel
+       )
+    )
+
+  (global-set-key (kbd "C-c s") 'jgoerzen/org-sync)
+#+END_SRC

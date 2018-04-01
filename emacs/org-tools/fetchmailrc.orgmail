@@ -1,0 +1,8 @@
+
+   set no bouncemail
+
+poll complete.org with proto imap:
+  mda "/home/jgoerzen/bin/insorgmail"
+  folder "orgmail"
+  no keep
+  fetchall

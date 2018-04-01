@@ -1,0 +1,83 @@
+#!/bin/bash
+set -e
+
+ID="WIXXXXX"
+SOFTWARE="insorgmail"
+ORGDIR="$HOME/org"
+ORGEMAIL="$ORGDIR/email.org"
+ORGDATABASE="$ORGDIR/data"
+UUID="`uuidgen`"
+UUIDFRONT="`echo $UUID | sed -e 's/^\(..\).*$/\1/'`"
+UUIDREST="`echo $UUID | sed -e 's/^..\(.*\)$/\1/'`"
+ORGDATADIR="$ORGDATABASE/$UUIDFRONT/$UUIDREST"
+TMPDIR=`mktemp -d --tmpdir "${SOFTWARE}.XXXXXXXXXXXXX"`
+trap 'rm -r $TMPDIR' 0
+
+FINPUT="$TMPDIR/input"
+FOUTPUT="$TMPDIR/output"
+MAILPARTS="$TMPDIR/mailparts"
+mkdir "$MAILPARTS"
+cat > "$FINPUT"
+
+gethdr () {
+    cat "$FINPUT" | formail -zcx "$1:" | sed -e 's/^ //' | dos2unix
+}
+
+SUBJECT="`gethdr Subject`"
+DATE="`gethdr Date`"
+FROM="`gethdr From`"
+
+ripmime --paranoid --name-by-type -i - -d "$MAILPARTS" < "$FINPUT"
+
+find "$MAILPARTS" -name 'multipart*' -exec rm {} +
+
+writeout_attachproc () {
+    find . -type f \( -not -name 'text-html*' \) \( -not -name 'text-plain*' \) -print0 |
+        while IFS= read -r -d '' file; do
+            mkdir -p "$ORGDATADIR"
+            cp "$file" "$ORGDATADIR"
+            echo -n " `echo "$file" | sed -e 's/ /%20/g' -e 's,^\./,,'`"
+        done
+}
+
+writeout () {
+    cd "$MAILPARTS"
+    ATTACHLIST="`writeout_attachproc`"
+    if [ -n "$ATTACHLIST" ]; then
+        echo "* TODO Email: ${SUBJECT} :ATTACH:"
+    else
+        echo "* TODO Email: ${SUBJECT}"
+    fi
+    echo "  :PROPERTIES:"
+    echo "  :ID: ${UUID}"
+    if [ -n "$ATTACHLIST" ]; then
+        echo "  :Attachments:$ATTACHLIST"
+    fi
+    echo "  :END:"
+    echo "  Date: $DATE"
+    echo "  From: $FROM"
+    echo ""
+    cd "$MAILPARTS"
+    for FILE in text-plain*; do
+        if [ -e "$FILE" ]; then
+            echo "** $FILE"
+            echo "   #+BEGIN_EXAMPLE"
+            cat "$FILE" | sed 's/^/   /'
+            echo "   #+END_EXAMPLE"
+        fi
+    done
+    for FILE in text-html*; do
+        if [ -e "$FILE" ]; then
+            echo "** $FILE"
+            pandoc -f html-raw_html-native_divs -t org -i "$FILE" | sed 's/^/   /'
+        fi
+    done
+}
+
+writeout > "$FOUTPUT"
+
+cat "$FOUTPUT" >> $ORGEMAIL
+cd "$ORGDIR"
+git add "$ORGEMAIL"
+git add "data/$UUIDFRONT/$UUIDREST" || true
+git commit -m 'Added files from insorgmail'
