@@ -69,13 +69,20 @@ there for details.
 
 With the [[https://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#org-tree-slide][org-tree-slide package]], you can display your slideshow from
 right within Emacs.  Just run =M-x org-tree-slide-mode=.  Then, use
-the left and right arrows to move between slides.
+=C->= and =C-<= to move between slides.
 
 You might find =C-c C-x C-v= (which is =org-toggle-inline-images=)
 helpful to cause the system to display embedded images.
 
+** HTML Slideshows
+
+There are a lot of ways to export org-mode presentations to HTML, with
+various levels of JavaScript integration.  See the [[https://orgmode.org/worg/org-tutorials/non-beamer-presentations.html][non-beamer
+presentations section]] of the org-mode wiki for details.
 
 * Beamer Slides with org-mode
+** Introduction to Beamer in org-mode
+
 
 
 * Miscellaneous
