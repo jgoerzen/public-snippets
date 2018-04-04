@@ -46,7 +46,37 @@ Some use org-mode as their preferred markup format, even for things
 like LaTeX documents.  The org-mode manual has an extensive [[https://orgmode.org/manual/Exporting.html#Exporting][section on
 exporting]].
 
-** 
+** Getting started
+
+From any org-mode document, just hit =C-c C-e=.  From there will come
+up a menu, letting you choose various export formats and options.
+These are generally single-key options so it's easy to set and
+execute.  For instance, to export a document to a PDF, use 
+=C-c C-e l p= or for HTML export, =C-c C-e h h=.
+
+There are lots of settings available for all of these export options;
+see the manual.  It is, in fact, quite possible to use LaTeX-format
+equations in both LaTeX and HTML modes, to insert arbitrary preambles
+and settings for different modes, etc.
+
+** Add-on packages
+
+ELPA containts many addition exporters for org-mode as well.  Check
+there for details.
+
+* Interactive Slides
+** Interactive Emacs Slideshows
+
+With the [[https://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#org-tree-slide][org-tree-slide package]], you can display your slideshow from
+right within Emacs.  Just run =M-x org-tree-slide-mode=.  Then, use
+the left and right arrows to move between slides.
+
+You might find =C-c C-x C-v= (which is =org-toggle-inline-images=)
+helpful to cause the system to display embedded images.
+
+
+* Beamer Slides with org-mode
+
 
 * Miscellaneous
 ** Resources to accompany this post
