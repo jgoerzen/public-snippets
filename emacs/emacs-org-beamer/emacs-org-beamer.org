@@ -25,8 +25,8 @@
 
 This is fifth in a [[https://changelog.complete.org/archives/tag/emacs2018][series on Emacs and org-mode]].
 
-This document was generated from [[https://github.com/jgoerzen/public-snippets/blob/master/emacs/emacs-org-beamer.org][an org-mode source]] and exported
-as PDF slides and a blog page.
+This blog post was generated from [[https://github.com/jgoerzen/public-snippets/blob/master/emacs/emacs-org-beamer.org][an org-mode source]] and is available
+as: [[http://changelog.complete.org/archives/9900-emacs-5-documents-and-presentations-with-org-mode][a blog page]], slides (PDF format), and a PDF document.
 
 * About org-mode exporting
 ** Background
@@ -132,7 +132,10 @@ instance, defines:
 #+END_EXAMPLE
 
 ** Advanced settings
-
+   :PROPERTIES:
+   :BEAMER_opt: shrink=15
+   :END:
+   
 I like to change some colors, bullet formatting, and the like.  I
 round out my document with:
 
@@ -151,11 +154,22 @@ round out my document with:
 #+BEAMER_HEADER: \setlength{\parskip}{\smallskipamount}
 #+END_EXAMPLE
 
-These are probably mostly self-explanatory.  aspectratio=169 sets a
+Here, =aspectratio=169= sets a
 16:9 aspect ratio, and the remaining are standard LaTeX/Beamer
 configuration bits.
 
+** Shrink (to fit)
+
+Sometimes you've got some really large code examples and you might
+prefer to just shrink the slide to fit.  
+
+Just type =C-c C-x p=, set the =BEAMER_opt= property to =shrink=15=.  
+
+(Or a larger value of shrink).  The previous slide uses this here.
 ** Result
+   :PROPERTIES:
+   :BEAMER_opt: shrink=15
+   :END:
 
 Here's the end result:
 
@@ -189,4 +203,6 @@ presentations section]] of the org-mode wiki for details.
    - Make sure to check out both the PDF and the .org file
  - A nice [[https://hartwork.org/beamer-theme-matrix/][Theme matrix]]
 
+** Up next in my Emacs series...
 
+mu4e for email!
