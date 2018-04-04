@@ -1,0 +1,20 @@
+#+TITLE:  Emacs #5: Generating documents and presentations with org-mode
+#+AUTHOR: John Goerzen
+#+BEAMER_HEADER: \institute{The Changelog}
+#+PROPERTY: comments yes
+#+PROPERTY: header-args :exports both :eval never-export
+#+OPTIONS: H:2
+#+BEAMER_THEME: CambridgeUS
+#+BEAMER_COLOR_THEME: default
+
+# We can't just +BEAMER_INNER_THEME: default because that picks the theme default.
+# Override per https://tex.stackexchange.com/questions/11168/change-bullet-style-formatting-in-beamer
+#+BEAMER_INNER_THEME: default
+#+LaTeX_CLASS_OPTIONS: [aspectratio=169]
+#+BEAMER_HEADER:
+  \setbeamertemplate{itemize items}[default]
+  \setbeamertemplate{enumerate items}[default]
+  \setbeamertemplate{items}[default]
+  \setbeamercolor*{local structure}{fg=darkred}
+  \setbeamercolor{section in toc}{fg=darkred}
+#+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
