@@ -159,9 +159,7 @@ configuration bits.
 
 Here's the end result:
 
-
-
-** 
+[[./screenshot1.png]]
 
 * Interactive Slides
 ** Interactive Emacs Slideshows
