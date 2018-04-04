@@ -11,6 +11,8 @@
 # Override per https://tex.stackexchange.com/questions/11168/change-bullet-style-formatting-in-beamer
 #+BEAMER_INNER_THEME: default
 #+LaTeX_CLASS_OPTIONS: [aspectratio=169]
+#+BEAMER_HEADER: \definecolor{links}{HTML}{0000A0}
+#+BEAMER_HEADER: \hypersetup{colorlinks=,linkcolor=,urlcolor=links}
 #+BEAMER_HEADER:
   \setbeamertemplate{itemize items}[default]
   \setbeamertemplate{enumerate items}[default]
@@ -18,8 +20,6 @@
   \setbeamercolor*{local structure}{fg=darkred}
   \setbeamercolor{section in toc}{fg=darkred}
   \setlength{\parskip}{\smallskipamount}
-  \definecolor{links}{HTML}{0000A0}
-  \hypersetup{colorlinks=,linkcolor=,urlcolor=links}
 #+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
 
 ** The Emacs series
