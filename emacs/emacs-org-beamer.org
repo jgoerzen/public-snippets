@@ -17,4 +17,48 @@
   \setbeamertemplate{items}[default]
   \setbeamercolor*{local structure}{fg=darkred}
   \setbeamercolor{section in toc}{fg=darkred}
+  \setlength{\parskip}{\smallskipamount}
+  \definecolor{links}{HTML}{0000A0}
+  \hypersetup{colorlinks=,linkcolor=,urlcolor=links}
 #+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
+
+** The Emacs series
+
+This is fifth in a [[https://changelog.complete.org/archives/tag/emacs2018][series on Emacs and org-mode]].
+
+This document was generated from [[https://github.com/jgoerzen/public-snippets/blob/master/emacs/emacs-org-beamer.org][an org-mode source]] and exported
+as PDF slides and a blog page.
+
+* About org-mode exporting
+** Background
+
+org-mode isn't just an agenda-making program.  It can also export to
+lots of formats: LaTeX, PDF, Beamer, iCalendar (agendas), HTML,
+Markdown, ODT, plain text, man pages, and more complicated formats
+such as a set of web pages.
+
+This isn't just some afterthought either; it's a core part of the
+system and integrates very well.
+
+One file can be source code, automatically-generated output, task
+list, documentation, and presentation, all at once.
+
+Some use org-mode as their preferred markup format, even for things
+like LaTeX documents.  The org-mode manual has an extensive [[https://orgmode.org/manual/Exporting.html#Exporting][section on
+exporting]].
+
+** 
+
+* Miscellaneous
+** Resources to accompany this post
+
+ - [[https://orgmode.org/worg/exporters/beamer/tutorial.html][orgmode.org beamer tutorial]]
+ - [[https://en.wikibooks.org/wiki/LaTeX/Presentations][LaTeX wiki]]
+ - [[https://tex.stackexchange.com/questions/117658/automatically-generate-section-title-slides-in-beamer/117661][Generating section title slides]]
+ - [[https://tex.stackexchange.com/questions/78514/content-doesnt-fit-in-one-slide][Shrinking content to fit on slide]]
+ - A *great* resource: refcard-org-beamer
+   - See its [[https://github.com/fniessen/refcard-org-beamer][Github repo]]
+   - Make sure to check out both the PDF and the .org file
+ - A nice [[https://hartwork.org/beamer-theme-matrix/][Theme matrix]]
+
+
