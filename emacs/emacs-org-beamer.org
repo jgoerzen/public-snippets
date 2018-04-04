@@ -64,6 +64,105 @@ and settings for different modes, etc.
 ELPA containts many addition exporters for org-mode as well.  Check
 there for details.
 
+* Beamer slides with org-mode
+** About Beamer
+
+[[https://en.wikipedia.org/wiki/Beamer_(LaTeX)][Beamer]] is a LaTeX environment for making presentations.  Its features
+include:
+
+ - Automated generating of structural elements in the
+   presentation (see, for example, [[https://hartwork.org/beamer-theme-matrix/all/beamer-albatross-Marburg-1.png][the Marburg theme]]).  This provides
+   a visual reference for the audience of where they are in the
+   presentation.
+ - Strong help for structuring the presentation
+ - Themes
+ - Full LaTeX available
+
+** Benefits of Beamer in org-mode
+
+org-mode has a lot of benefits for working with Beamer.  Among them:
+
+ - org-mode's very easy and strong support for visualizing and
+   changing the structure makes it very quick to reorganize your
+   material.
+ - Combined with org-babel, live source code (with syntax
+   highlighting) and results can be embedded.
+ - The syntax is often easier to work with.
+
+I have completely replaced my usage of
+LibreOffice/Powerpoint/GoogleDocs with org-mode and beamer.  It is, in
+fact, rather frustrating when I have to use one of those tools, as
+they are nowhere near as strong as org-mode for visualizing a
+presentation structure.
+
+** Headline Levels
+
+org-mode's Beamer export will convert sections of your document
+(defined by headings) into slides.  The question, of course, is:
+/which/ sections?  This is governed by the H [[https://orgmode.org/manual/Export-settings.html#Export-settings][export setting]]
+(=org-export-headline-levels=).
+
+There are many ways to go, which suit people.  I like to have my
+presentation like this:
+
+#+BEGIN_EXAMPLE
+#+OPTIONS: H:2
+#+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
+#+END_EXAMPLE
+
+This gives a standalone section slide for each major topic, to
+highlight major transitions, and then takes the level 2 (two
+asterisks) headings to set the slide.  Many Beamer themes expect a
+third level of indirection, so you would set =H:3= for them.
+
+** Themes and settings
+You can configure many Beamer and LaTeX settings in your document by
+inserting lines at the top of your org file.  This document, for
+instance, defines:
+
+#+BEGIN_EXAMPLE
+#+TITLE:  Documents and presentations with org-mode
+#+AUTHOR: John Goerzen
+#+BEAMER_HEADER: \institute{The Changelog}
+#+PROPERTY: comments yes
+#+PROPERTY: header-args :exports both :eval never-export
+#+OPTIONS: H:2
+#+BEAMER_THEME: CambridgeUS
+#+BEAMER_COLOR_THEME: default
+#+END_EXAMPLE
+
+** Advanced settings
+
+I like to change some colors, bullet formatting, and the like.  I
+round out my document with:
+
+#+BEGIN_EXAMPLE
+# We can't just +BEAMER_INNER_THEME: default because that picks the theme default.
+# Override per https://tex.stackexchange.com/questions/11168/change-bullet-style-formatting-in-beamer
+#+BEAMER_INNER_THEME: default
+#+LaTeX_CLASS_OPTIONS: [aspectratio=169]
+#+BEAMER_HEADER: \definecolor{links}{HTML}{0000A0}
+#+BEAMER_HEADER: \hypersetup{colorlinks=,linkcolor=,urlcolor=links}
+#+BEAMER_HEADER: \setbeamertemplate{itemize items}[default]
+#+BEAMER_HEADER: \setbeamertemplate{enumerate items}[default]
+#+BEAMER_HEADER: \setbeamertemplate{items}[default]
+#+BEAMER_HEADER: \setbeamercolor*{local structure}{fg=darkred}
+#+BEAMER_HEADER: \setbeamercolor{section in toc}{fg=darkred}
+#+BEAMER_HEADER: \setlength{\parskip}{\smallskipamount}
+#+END_EXAMPLE
+
+These are probably mostly self-explanatory.  aspectratio=169 sets a
+16:9 aspect ratio, and the remaining are standard LaTeX/Beamer
+configuration bits.
+
+** Result
+
+Here's the end result:
+
+
+
+** 
+
 * Interactive Slides
 ** Interactive Emacs Slideshows
 
@@ -80,13 +179,8 @@ There are a lot of ways to export org-mode presentations to HTML, with
 various levels of JavaScript integration.  See the [[https://orgmode.org/worg/org-tutorials/non-beamer-presentations.html][non-beamer
 presentations section]] of the org-mode wiki for details.
 
-* Beamer Slides with org-mode
-** Introduction to Beamer in org-mode
-
-
-
 * Miscellaneous
-** Resources to accompany this post
+** Additional resources to accompany this post
 
  - [[https://orgmode.org/worg/exporters/beamer/tutorial.html][orgmode.org beamer tutorial]]
  - [[https://en.wikibooks.org/wiki/LaTeX/Presentations][LaTeX wiki]]
